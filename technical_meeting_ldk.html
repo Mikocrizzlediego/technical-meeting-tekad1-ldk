@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Meeting TEKAD 1 UINSU 2026</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #F7F8F3;
+            --primary: #52AEA3;
+            --secondary: #AEDDCB;
+            --accent: #AADF87;
+            --text-dark: #1f2937;
+            --text-muted: #4b5563;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --shadow-sm: 0 4px 6px -1px rgba(82, 174, 163, 0.1);
+            --shadow-md: 0 10px 25px -5px rgba(82, 174, 163, 0.2);
+            --shadow-hover: 0 20px 25px -5px rgba(82, 174, 163, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Animations */
+        .fade-up-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-up-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Generic Card Styling */
+        .custom-card {
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(174, 221, 203, 0.3);
+            box-shadow: var(--shadow-sm);
+            padding: 24px;
+            transition: var(--transition);
+            height: 100%;
+        }
+        .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        /* Header / Hero */
+        .hero-section {
+            padding: 80px 20px 60px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--secondary) 0%, rgba(82, 174, 163, 0.1) 100%);
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo-trigger {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 4px solid white;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .logo-trigger:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Floating Modal specific */
+        .modal-content.floating-card {
+            border-radius: var(--radius-lg);
+            border: none;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        /* Badges & Icons */
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 15px;
+            transition: var(--transition);
+        }
+        .custom-card:hover .icon-box {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .section-title {
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            background: var(--accent);
+            bottom: -8px;
+            left: 25%;
+            border-radius: 2px;
+        }
+
+        /* Timeline / Rundown */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-left: 20px;
+            border-left: 3px solid var(--secondary);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(174, 221, 203, 0.2);
+            transition: var(--transition);
+        }
+        .timeline-item:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -39px;
+            top: 25px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--bg-main);
+            box-shadow: 0 0 0 3px var(--secondary);
+        }
+        .time-badge {
+            background: var(--accent);
+            color: var(--text-dark);
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        /* Dresscode Tabs */
+        .nav-pills .nav-link {
+            border-radius: 30px;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 10px 25px;
+            margin: 0 5px;
+            transition: var(--transition);
+        }
+        .nav-pills .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(82, 174, 163, 0.4);
+        }
+        
+        .table-custom {
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .table-custom thead {
+            background-color: var(--secondary);
+            color: var(--text-dark);
+        }
+        .table-custom th, .table-custom td {
+            padding: 16px;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(82, 174, 163, 0.1);
+        }
+        
+        /* Lists */
+        .styled-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .styled-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .styled-list li::before {
+            content: '058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        /* Quote */
+        .quote-box {
+            background: linear-gradient(135deg, white, var(--bg-main));
+            border: 2px dashed var(--secondary);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        .quote-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <header class="hero-section fade-up-element">
+        <div class="container">
+            <!-- Logo with Modal Trigger -->
+            <img src="logo_2.jpg" alt="Logo LDK" class="logo-trigger mb-4" data-bs-toggle="modal" data-bs-target="#floatingLogoModal">
+            
+            <span class="badge bg-white text-dark px-3 py-2 rounded-pill shadow-sm mb-3">Technical Meeting</span>
+            <h1 class="display-4 fw-bold" style="color: var(--primary);">TEKAD 1 UINSU 2026</h1>
+            <p class="lead fw-medium text-dark mt-2">Lembaga Dakwah Kampus AL-IZZAH UINSU</p>
+			<p class="lead fw-medium text-dark mt-2">"Membentuk Kader Dakwah Yang Berintegritas, Berintelektualitas dan Berjiwa Kepemimpinan"</p>
+        </div>
+    </header>
+
+    <!-- Modal Logo Floating Card -->
+    <div class="modal fade" id="floatingLogoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content floating-card p-4 text-center">
+                <div class="modal-body">
+                    <img src="logo_2.jpg" alt="Logo LDK Al-Izzah" class="img-fluid rounded shadow-sm mb-4" style="max-width: 200px;">
+                    <h3 class="fw-bold" style="color: var(--primary);">LDK AL-IZZAH UINSU</h3>
+                    <p class="text-muted mt-3 mb-0">Lembaga Dakwah Kampus yang bergerak di bidang dakwah komprehensif, pembinaan karakter Islami, dan pengabdian masyarakat di lingkungan UIN Sumatera Utara.</p>
+                </div>
+                <div class="mt-3">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        
+        <!-- Info Utama (3 Cards) -->
+        <div class="row g-4 mb-5 fade-up-element">
+            <div class="col-md-4">
+                <div class="custom-card text-center">
+                    <div class="icon-box"><i class="fa-regular fa-calendar-check"></i></div>
+                    <h6 class="text-uppercase text-muted fw-bold mb-1">Pelaksanaan</h6>
+                    <h4 class="fw-bold mb-0"> Sabtu s/d Ahad,<br>17 - 18 Oktober 2026</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="custom-card text-center">
+                    <div class="icon-box"><i class="fa-regular fa-clock"></i></div>
+                    <h6 class="text-uppercase text-muted fw-bold mb-1">Waktu Kedatangan</h6>
+                    <h4 class="fw-bold mb-0">08.00 WIB</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="custom-card text-center">
+                    <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                    <h6 class="text-uppercase text-muted fw-bold mb-1">Lokasi</h6>
+                    <h4 class="fw-bold mb-0">Aula Fakultas Syariah & Hukum, UINSU Pancing</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sejarah LDK -->
+        <div class="row mb-5 fade-up-element align-items-center">
+            <div class="col-lg-12 text-center mb-4">
+                <h2 class="section-title">Sejarah LDK Al-Izzah</h2>
+            </div>
+            <div class="col-lg-10 mx-auto">
+                <div class="custom-card p-4 p-md-5">
+                    <p class="lead mb-4 text-center">"Membangun Peradaban dari Kampus"</p>
+                    <p class="text-muted text-justify">
+                        Berdirinya LDK Al-Izzah UIN SU diawali dengan inisiatif beberapa mahasiswa IAIN SU pada tanggal 8 - 10 Oktober 1993 membicarakan mengenai pembentukan organisasi dakwah yang berkedudukan di kampus IAIN SU. Pada tanggal 12 Oktober 1993 organisasi dakwah akhirnya berdiri yang pada saat itu bernama FUMA (Forum Ukhuwah Mahasiswa). 
+                    </p>
+                    <p class="text-muted text-justify mb-0">
+                        Pada tanggal 25 November 1994 FUMA resmi menjadi organisasi intra kampus IAIN SU dan setelah itu FUMA berganti nama menjadi Lembaga Dakwah Kampus IAIN SU. Kemudian pada tahun 2007 LDK IAIN SU berganti nama kembali menjadi Lembaga Dakwah Kampus Al-Izzah IAIN SU, Seiring dengan perubahan nama IAIN SU menjadi UIN SU itu mengacu pada Peraturan Presiden (PP) RI Nomor 131/ 2014 yang ditetapkan sejak 18 Oktober 2014 maka LDK Al-Izzah IAIN SU berganti nama kembali menjadi LDK AL-IZZAH UIN SU.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visi & Misi -->
+        <div class="row mb-5 fade-up-element">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="custom-card h-50" style="background-color: var(--primary); color: white;">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fa-solid fa-eye fs-3 me-3 text-warning"></i>
+                        <h3 class="fw-bold mb-0 text-white">Visi</h3>
+                    </div>
+                    <p class="fs-5 mt-3">“Menjadi Lembaga Dakwah Kampus Mandiri dan Profesional dalam Mewujudkan Kampus yang Madani.”</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="custom-card h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fa-solid fa-bullseye fs-3 me-3" style="color: var(--primary);"></i>
+                        <h3 class="fw-bold mb-0" style="color: var(--primary);">Misi</h3>
+                    </div>
+                    <ul class="styled-list mt-3">
+                        <li>Mengoptimalkan kader dakwah dengan memiliki kekuatan fisik dan kecakapan intelektual, skill, emosional, militansi, dan spritual yang sesuai dengan Al-Qur’an dan As-Sunnah.</li>
+                        <li>Mensinergikan kerja dakwah dengan pemantapan konsolidasi internal yang didukung oleh elemen dakwah kampus, fakultas, individu, maupun lembaga yang mendukung gerak dakwah.</li>
+                        <li>Bersama-sama seluruh unsur dakwah yang ada di UIN SU untuk membangun kehidupan Islami dan mensyiarkan Islam di lingkungan kampus dan masyarakat.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Departemen di LDK -->
+        <div class="row mb-5 fade-up-element text-center">
+            <div class="col-12 mb-4">
+                <h2 class="section-title">Departemen LDK Al-Izzah</h2>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="custom-card text-center p-3">
+                    <i class="fa-solid fa-users fs-1 mb-3" style="color: var(--primary);"></i>
+                    <h5 class="fw-bold mb-0">Kaderisasi</h5>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="custom-card text-center p-3">
+                    <i class="fa-solid fa-bullhorn fs-1 mb-3" style="color: var(--accent);"></i>
+                    <h5 class="fw-bold mb-0">Syiar</h5>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="custom-card text-center p-3">
+                    <i class="fa-solid fa-handshake fs-1 mb-3" style="color: var(--primary);"></i>
+                    <h5 class="fw-bold mb-0">Humas</h5>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <div class="custom-card text-center p-3">
+                    <i class="fa-solid fa-flower-tulip fs-1 mb-3" style="color: var(--accent);"></i>
+                    <h5 class="fw-bold mb-0">Annisa</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rundown Acara -->
+        <div class="row mb-5 fade-up-element">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-4">
+                    <h2 class="section-title">Rundown Acara (Hari 1)</h2>
+                    <p class="text-muted">Jadwal dapat berubah menyesuaikan kondisi lapangan.</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="time-badge">08:00 - 09:00</span>
+                        <h5 class="fw-bold">Registrasi & Check-in Peserta</h5>
+                        <p class="text-muted mb-0">Pendataan ulang peserta di meja panitia, pembagian nametag dan kelompok.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time-badge">09:00 - 10:00</span>
+                        <h5 class="fw-bold">Pembukaan Acara</h5>
+                        <p class="text-muted mb-0">Tilawah, menyanyikan lagu kebangsaan, dan kata sambutan dari ketua panitia dan pembina LDK.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time-badge">10:00 - 12:00</span>
+                        <h5 class="fw-bold">Materi I: Urgensi Dakwah Kampus</h5>
+                        <p class="text-muted mb-0">Pemaparan materi oleh narasumber utama, dilanjutkan sesi tanya jawab.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time-badge">12:00 - 13:30</span>
+                        <h5 class="fw-bold">ISHOMA</h5>
+                        <p class="text-muted mb-0">Istirahat, Sholat Dzuhur berjamaah, dan makan siang bersama.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time-badge">13:30 - 15:30</span>
+                        <h5 class="fw-bold">Forum Group Discussion (FGD)</h5>
+                        <p class="text-muted mb-0">Diskusi per kelompok dipandu oleh fasilitator/mentor masing-masing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panduan Pakaian (Dresscode) -->
+        <div class="row mb-5 fade-up-element">
+            <div class="col-12 text-center mb-4">
+                <h2 class="section-title">Panduan Pakaian (Dresscode)</h2>
+            </div>
+            <div class="col-lg-10 mx-auto">
+                
+                <ul class="nav nav-pills justify-content-center mb-4" id="dresscode-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="panitia-tab" data-bs-toggle="pill" data-bs-target="#panitia" type="button" role="tab" aria-selected="true">Panitia</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="peserta-tab" data-bs-toggle="pill" data-bs-target="#peserta" type="button" role="tab" aria-selected="false">Peserta</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="dresscode-tabContent">
+                    <!-- Tab Panitia -->
+                    <div class="tab-pane fade show active" id="panitia" role="tabpanel" tabindex="0">
+                        <div class="table-responsive">
+                            <table class="table table-custom text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Hari</th>
+                                        <th>Ikhwan (Laki-laki)</th>
+                                        <th>Akhwat (Perempuan)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge" style="background-color: var(--primary);">Sabtu</span></td>
+                                        <td>Baju Batik<br>Celana Hitam</td>
+                                        <td>Baju Batik<br>Jilbab Coksu, Rok Hitam</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge" style="background-color: var(--primary);">Ahad</span></td>
+                                        <td>Baju PDH / Baju Putih<br>Celana Hitam</td>
+                                        <td>Baju PDH / Baju Putih<br>Jilbab Army, Rok Hitam</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tab Peserta -->
+                    <div class="tab-pane fade" id="peserta" role="tabpanel" tabindex="0">
+                        <div class="table-responsive">
+                            <table class="table table-custom text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Hari</th>
+                                        <th>Ikhwan (Laki-laki)</th>
+                                        <th>Akhwat (Perempuan)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge" style="background-color: var(--accent); color: var(--text-dark);">Sabtu</span></td>
+                                        <td>Baju Putih<br>Celana Hitam</td>
+                                        <td>Baju Putih + Rok Hitam<br>Jilbab Hitam</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="badge" style="background-color: var(--accent); color: var(--text-dark);">Ahad</span></td>
+                                        <td>Baju Batik<br>Celana Hitam</td>
+                                        <td>Baju Batik + Rok Hitam<br>Jilbab Coksu</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert mt-3 d-flex align-items-center" style="background-color: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; color: #b45309;">
+                    <i class="fa-solid fa-circle-exclamation fs-4 me-3"></i>
+                    <div><strong>Perhatian:</strong> Seluruh panitia dan peserta wajib menggunakan sepatu saat berada di dalam forum kegiatan.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Persiapan & Perlengkapan -->
+        <div class="row mb-5 fade-up-element">
+            <div class="col-12 text-center mb-4">
+                <h2 class="section-title">Persiapan & Perlengkapan Pribadi</h2>
+            </div>
+            
+            <div class="row g-3 justify-content-center">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="custom-card d-flex align-items-center p-3 h-100">
+                        <div class="me-3 fs-3" style="color: var(--primary);"><i class="fa-solid fa-pen-ruler"></i></div>
+                        <div class="fw-bold" style="font-size: 0.9rem;">Alat Tulis</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="custom-card d-flex align-items-center p-3 h-100">
+                        <div class="me-3 fs-3" style="color: var(--primary);"><i class="fa-solid fa-bottle-droplet"></i></div>
+                        <div class="fw-bold" style="font-size: 0.9rem;">Tumbler</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="custom-card d-flex align-items-center p-3 h-100">
+                        <div class="me-3 fs-3" style="color: var(--primary);"><i class="fa-solid fa-book-quran"></i></div>
+                        <div class="fw-bold" style="font-size: 0.9rem;">Al-Qur'an</div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="custom-card d-flex align-items-center p-3 h-100">
+                        <div class="me-3 fs-3" style="color: var(--primary);"><i class="fa-solid fa-person-praying"></i></div>
+                        <div class="fw-bold" style="font-size: 0.9rem; line-height: 1.2;">Perlengkapan Sholat<br><small class="text-muted fw-normal">(Khusus Akhwat)</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tugas & Biaya -->
+        <div class="row mb-5 fade-up-element g-4">
+            <div class="col-md-6">
+                <div class="custom-card p-4 p-md-5 h-100 position-relative overflow-hidden">
+                    <div class="position-absolute top-0 end-0 p-3 opacity-25">
+                        <i class="fa-solid fa-list-check fs-1" style="color: var(--primary);"></i>
+                    </div>
+                    <h4 class="fw-bold mb-4 d-flex align-items-center">
+                        <i class="fa-solid fa-file-signature me-2" style="color: var(--primary);"></i> Penugasan
+                    </h4>
+                    <ul class="styled-list">
+                        <li>Hapalan Q.S As-Shaf 1-5 <br><small class="text-muted fw-normal">(Beserta Artinya)</small></li>
+                        <li>Menghafal Doa Rabi'thah</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="custom-card p-4 p-md-5 h-100 position-relative overflow-hidden text-center d-flex flex-column justify-content-center">
+                    <div class="position-absolute top-0 end-0 p-3 opacity-25">
+                        <i class="fa-solid fa-wallet fs-1" style="color: var(--primary);"></i>
+                    </div>
+                    <h5 class="fw-bold text-muted mb-2 text-uppercase letter-spacing-1">Kontribusi Peserta</h5>
+                    <div class="price-tag mb-2">Rp 10.000</div>
+                    <p class="text-muted small">Mencakup penginapan, konsumsi (3x sehari), sertifikat, dan merchandise.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote -->
+        <div class="row mb-5 fade-up-element">
+            <div class="col-lg-10 mx-auto">
+                <div class="quote-box">
+                    <i class="fa-solid fa-quote-left quote-icon"></i>
+                    <h4 class="fst-italic mb-4 mt-3 lh-base" style="position: relative; z-index: 1;">
+                        "Kebaikan yang tidak terorganisir dengan baik akan mampu dikalahkan oleh kejahatan yang terorganisir dengan baik."
+                    </h4>
+                    <span class="badge rounded-pill fw-bold" style="background-color: var(--primary); padding: 8px 20px;">Imam Ali R.A</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-muted border-top">
+        <p class="mb-0 fw-bold letter-spacing-1">JAZAAKUMULLAH KHAIRAN</p>
+        <small>© 2026 LDK Al-Izzah UINSU. All rights reserved.</small>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Intersection Observer for Scroll Animation -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Hanya animasi sekali saat muncul
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-up-element');
+            fadeElements.forEach((el, index) => {
+                // Memberikan sedikit delay bertingkat jika elemen berdekatan
+                el.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
